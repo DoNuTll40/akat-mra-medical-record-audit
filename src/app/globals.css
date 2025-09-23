@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/forms";
+/* @plugin "@tailwindcss/forms"; */
 @plugin './hero.js';
 
 @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
@@ -23,8 +23,9 @@
   :root {
     --background: #212121;
     --foreground: #ededed;
-    --toploader: #ffffff;
-
+    --header-agrid: #F9F9F9;
+    --header-agrid: #181818;
+    
     --sb-track: transparent;
     --sb-thumb: #303030;
     --sb-thumb-hover: #6b7280;
@@ -35,6 +36,7 @@ html.dark {
   --background: #212121;
   --foreground: #ededed;
   --toploader: #ffffff;
+  --header-agrid: #181818;
 
   --sb-track: transparent;
   --sb-thumb: #303030;
@@ -66,22 +68,67 @@ body {
 }
 
 .ag-theme-quartz, .ag-theme-quartz-dark {
-  /* พื้นหลังตารางทั้งหมด */
-  --ag-background-color:  transparent !important;
-
-  /* แถวสลับสี ถ้าไม่อยากให้มี */
-  --ag-odd-row-background-color: transparent !important;
-
-  /* พื้นหลังหัวตาราง */
-  --ag-header-background-color: transparent !important;
-
-  /* เส้นขอบให้หายใจโล่งๆ */
-  /* --ag-border-color: transparent; */
-
-  /* ถ้าอยากให้เส้นคั่นหัวคอลัมน์หายด้วย */
-  --ag-header-column-separator-color: transparent;
-
-  /* เงา hover/เลือกแถว ปรับตามชอบ จะลบทิ้งก็ได้ */
   --ag-row-hover-color: var(--sb-thumb) !important;
   --ag-selected-row-background-color: var(--sb-thumb) !important;
+}
+
+.ag-theme-quartz, .ag-theme-quartz * {
+  @apply font-sans
+}
+
+/* 1) อย่าโปร่งใสทั้งธีม คืนพื้นหลังให้คอมโพเนนต์ของ AG Grid ก่อน */
+.ag-theme-quartz,
+.ag-theme-quartz-dark {
+  --ag-background-color: var(--background) !important;     /* เดิม: transparent */
+  --ag-header-background-color: var(--header-agrid) !important;     /* อยากให้ header โปร่งก็โอเค */
+  --ag-odd-row-background-color: transparent !important;    /* แถวคี่โปร่งได้ */
+  --ag-input-background-color: var(--background) !important;/* กล่อง input ในเมนู */
+  --ag-tooltip-background-color: var(--background) !important;
+}
+
+/* 2) เจาะจง popup/เมนูให้มีพื้นหลังแน่นอน */
+.ag-theme-quartz .ag-menu,
+.ag-theme-quartz-dark .ag-menu,
+.ag-theme-quartz .ag-filter-wrapper,
+.ag-theme-quartz-dark .ag-filter-wrapper {
+  background-color: var(--background) !important;
+  border-color: color-mix(in oklab, var(--foreground) 12%, transparent) !important;
+}
+
+/* 3) กล่องกรองข้อความในเมนู (ช่อง search “Filter…”) */
+.ag-theme-quartz .ag-input-field-input,
+.ag-theme-quartz-dark .ag-input-field-input {
+  background-color: color-mix(in oklab, var(--background) 92%, var(--foreground) 8%) !important;
+}
+
+/* 4) ถ้าอยากโปร่งเฉพาะพื้นที่ข้อมูล ไม่กระทบ popup ให้โปร่งตรง body พอ */
+.ag-theme-quartz .ag-center-cols-viewport,
+.ag-theme-quartz-dark .ag-center-cols-viewport {
+  background: transparent !important;
+}
+
+.ag-paging-panel {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Apply the custom font to pagination elements */
+.ag-paging-panel,
+.ag-paging-row-summary-panel,
+.ag-paging-page-summary-panel,
+.ag-paging-button {
+  font-family: 'Sarabun', sans-serif;
+  font-size: 14px;
+}
+
+.ag-root-wrapper {
+  @apply font-sans rounded-2xl;
+}
+
+@media (max-width: 640px) {
+  .ag-paging-panel {
+    flex-direction: column;
+    justify-content: center;
+    overflow-x: auto;
+  }
 }

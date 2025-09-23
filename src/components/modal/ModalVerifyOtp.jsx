@@ -1,4 +1,5 @@
 import axiosApi from "@/config/axios-api";
+import AuthenHook from "@/hooks/AuthenHook.mjs";
 import { Alert } from "@heroui/alert";
 import { InputOtp } from "@heroui/input-otp";
 import { addToast } from "@heroui/toast";
@@ -8,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ModalVerifyOtp({ open, onClose, onVerify,  onResend, token }) {
+  const { verifyToken } = AuthenHook();
   const [code, setCode] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [sec, setSec] = useState(300); // 5 นาที
@@ -55,6 +57,7 @@ export default function ModalVerifyOtp({ open, onClose, onVerify,  onResend, tok
               color: "success",
               shouldShowTimeoutProgress: true,
             })
+            router.replace("/");
         }
 
     } catch (err) {
@@ -72,22 +75,6 @@ export default function ModalVerifyOtp({ open, onClose, onVerify,  onResend, tok
         setLoading(false);
     }
 };
-
-const verifyToken = async () => {
-    try {
-        const res = await axiosApi.post("auth/verify", {}, {
-            headers: { Authorization: `Bearer ${token}` }
-        })
-        if(res.status === 200){
-          localStorage.setItem("token", token);
-          localStorage.setItem("profile", JSON.stringify(res.data.data));
-          router.replace("/");
-          onClose();
-        }
-    } catch (err) {
-        console.log(err)
-    }
-  }
 
   const doResend = async () => {
     if (sec > 0) return;
@@ -157,14 +144,16 @@ const verifyToken = async () => {
                     onValueChange={setCode}
                     color={`${alertMessage ? "danger" : ""}`}
                     className="mx-auto"
+                    isDisabled={code === 6}
+                    autoFocus={true}
+                    
                   />
                   <div className="mt-3 flex items-center justify-between">
                     <button
                       type="button"
                       onClick={doResend}
                       disabled={sec > 0}
-                      className={[
-                        "text-xs",
+                      className={["text-xs",
                         sec > 0
                           ? "text-zinc-500 dark:text-zinc-500 cursor-not-allowed"
                           : "text-sky-600 hover:underline dark:text-sky-400",

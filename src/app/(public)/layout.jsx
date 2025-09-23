@@ -7,11 +7,20 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import useLockBody from "@/hooks/useLockBody.mjs";
+import AuthenHook from "@/hooks/AuthenHook.mjs";
+import LoadingCenter from "@/components/loading";
 
 export default function PublicLayout({ children }) {
+  const { authLoading } = AuthenHook();
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   useLockBody(open);
+
+  if(authLoading){
+    return (
+      <div className="w-full h-dvh flex items-center justify-center"><LoadingCenter /></div>
+    )
+  }
 
   return (
     <div className="h-dvh flex flex-col font-sans">
@@ -21,7 +30,7 @@ export default function PublicLayout({ children }) {
         <aside className={`hidden lg:flex rounded-r-xl flex-col transition-all ease-in-out duration-300 bg-[#F9F9F9] dark:bg-[#181818] border-r-[0.2] border-black/10 dark:border-[#2C2C2C] ${ collapsed ? "w-14" : "w-64" }`}>
             <div className="h-12 my-0.5 flex items-center justify-between px-2">
                 <p className={`whitespace-nowrap overflow-hidden transition-all ease-in-out duration-500 ${collapsed ? "w-0 opacity-0" : "w-full opacity-100"} `}>Medical Record Audit</p>
-                <button className={` ${collapsed ? 'w-full flex justify-center' : ''} cursor-pointer opacity-80 p-2 rounded-md hover:bg-[#EFEFEF] hover:dark:bg-[#303030]`} onClick={() => setCollapsed(!collapsed)} aria-label="Toggle sidebar"><PanelLeft size={20} /></button>
+                <button className={` ${collapsed ? 'w-full flex justify-center' : ''} cursor-w-resize opacity-80 p-2 rounded-md hover:bg-[#EFEFEF] hover:dark:bg-[#303030]`} onClick={() => setCollapsed(!collapsed)} aria-label="Toggle sidebar"><PanelLeft size={20} /></button>
             </div>
             <div className="h-[calc(100dvh)] overflow-y-auto p-2">
                 <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
@@ -49,13 +58,13 @@ export default function PublicLayout({ children }) {
             <Header onOpenMenu={() => setOpen(true)} />
             {/* Main content scrollable */}
             <main className="flex-1 overflow-y-auto">
-                <div className="max-w-[90rem] mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+                <div className="max-w-[95rem] mx-auto w-full px-4 sm:px-6 py-5">
                   {children}
                 </div>
             </main>
             <Footer />
         </div>
       </div>
-    </div>    
+    </div>
   );
 }

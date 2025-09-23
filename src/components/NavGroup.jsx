@@ -25,7 +25,7 @@ export default function NavGroup({ item, pathname, collapsed }) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         className={cx(
-          "flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-sm transition cursor-pointer",
+          "flex w-full items-center justify-between rounded-xl px-2.5 py-2 text-sm transition cursor-pointer",
           "hover:bg-black/5 dark:hover:bg-white/5",
           (open || isParentActive) &&
             "bg-black/10 dark:bg-white/10 ring-1 ring-black/10 dark:ring-white/10"
@@ -64,7 +64,7 @@ export default function NavGroup({ item, pathname, collapsed }) {
                 <Link
                   href={c.href}
                   className={cx(
-                    "flex w-full items-center rounded-md pl-5 px-2 py-1.5 text-sm relative cursor-pointer",
+                    "flex w-full items-center rounded-lg pl-5 px-2 py-1.5 text-sm relative cursor-pointer",
                     "hover:bg-black/5 dark:hover:bg-white/5",
                     active &&
                       "bg-black/10 dark:bg-white/10 ring-1 ring-black/10 dark:ring-white/10"

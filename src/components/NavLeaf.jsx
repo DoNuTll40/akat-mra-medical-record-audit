@@ -9,7 +9,7 @@ export default function NavLeaf({ item, active, collapsed }) {
         href={item.href}
         aria-current={active ? "page" : undefined}
         className={cx(
-          "group flex w-full items-center rounded-lg px-2.5 py-2 text-sm transition cursor-pointer",
+          "group flex w-full items-center rounded-xl px-2.5 py-2 text-sm transition cursor-pointer",
           "hover:bg-black/5 dark:hover:bg-white/5",
           active && "bg-black/10 dark:bg-white/10 ring-1 ring-black/10 dark:ring-white/10"
         )}

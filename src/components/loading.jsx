@@ -1,4 +1,4 @@
-export default function LoadingCenter() {
+export default function LoadingCenter({ title = "กำลังตรวจสอบสิทธิ์การเข้าถึง..." }) {
   return (
     <div className="w-full flex items-center justify-center px-4">
         {/* สปินเนอร์ + ข้อความ */}
@@ -8,7 +8,7 @@ export default function LoadingCenter() {
             border-zinc-500/40 border-t-emerald-500 animate-spin"
             aria-hidden
           />
-          <span className="text-base">กำลังตรวจสอบสิทธิ์การเข้าถึง…</span>
+          <span className="text-base">{title}</span>
         </div>
     </div>
   );

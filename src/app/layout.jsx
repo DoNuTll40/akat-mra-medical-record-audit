@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
       <head>
         <PublicEnvScript />
       </head>
-      <body>
+      <body className={sarabun.className}>
         <Providers>
           {children}
         </Providers>

@@ -10,6 +10,7 @@ import Ripple from "material-ripple-effects";
 import axiosApi from "@/config/axios-api";
 import { addToast, getToastQueue, Toast, useToast } from "@heroui/toast";
 import { Info } from "lucide-react";
+import PopUpMessage from "./modal/PopUpMessage";
 
 export default function LoginCard({ animated }) {
   const [showPass, setShowPass] = useState(false);
@@ -18,6 +19,8 @@ export default function LoginCard({ animated }) {
   const [showModalOtp, setShowModalOtp] = useState(false);
   const [loading, setLoading] = useState(false);
   const formRef = useRef(null);
+
+  const [showModalPopUpMessage, setShowModalPopUpMessage] = useState(false);
 
   const ripple = new Ripple();
 
@@ -33,9 +36,11 @@ export default function LoginCard({ animated }) {
 
       if (res.status === 200) {
         setToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
         setShowModalOtp(true);
       };
     } catch (err) {
+      setShowModalPopUpMessage(true);
       addToast({
         title: "เกิดข้อผิดพลาด",
         description: err.response.data.message,
@@ -50,6 +55,7 @@ export default function LoginCard({ animated }) {
 
   return (
     <Card>
+      { showModalPopUpMessage && <PopUpMessage title="การเชื่อมต่อช้า" type="error" message="ระบบเกิดข้อผิดพลาดอยู่ในขณะนี้…" onClose={() => setShowModalPopUpMessage(false)} /> }
       <ModalVerifyOtp open={showModalOtp} onClose={() => setShowModalOtp(false)} token={token} />
       <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.25, delayChildren: 0.15 }}>
         {/* Header */}
