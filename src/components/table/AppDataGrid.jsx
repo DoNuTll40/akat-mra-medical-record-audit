@@ -101,7 +101,7 @@ export default function AppDataGrid({ columnDefs, rowData, loading = true, pagin
             localeText={thLocale}
             pagination={pagination}
             theme={myTheme}
-            rowSelection={"single"}
+            rowSelection={{ mode: 'singleRow' }}
             onCellValueChanged={onCellValueChanged}
             onGridReady={onGridReady}
             />

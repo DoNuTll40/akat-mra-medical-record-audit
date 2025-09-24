@@ -58,22 +58,12 @@ export default function Page() {
 
   useEffect(() => setMounted(true), []);
 
-  useEffect(() => {
-    if (authLoading) return;
-
-    // ถ้าไม่มี token หรือชื่อว่าง ให้ forbidden แล้วหยุด
-    if (!token || !profile?.fullname?.trim()) {
-      forbidden();
-      return;
-    }
-
-    fetchFormIPD(); // ถ้ามี function นี้จริงๆ
-    fetchHcode();
-    inputRef.current.focus();
-  }, [authLoading, token, profile]);
-
   if (authLoading) {
     return <LoadingCenter />;
+  }
+
+  if (!token) {
+    return <p>คุณยังไม่ได้เข้าสู่ระบบ</p>
   }
 
   const onGridReady = useCallback((event) => {
@@ -212,21 +202,15 @@ export default function Page() {
     }
   };
 
-  const fetchFormIPD = async () => {
-    try {
-      const res = await axiosApi.get("mraIpd", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
+  useEffect(() => {
+    if (authLoading) return;
 
-      if(res.status === 200){
-        console.log(res.data)
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
+    // // ถ้าไม่มี token หรือชื่อว่าง ให้ forbidden แล้วหยุด
+    // if (!token || !profile?.fullname?.trim()) return <p>คุณยังไม่ได้เข้าสู่ระบบ</p>
+
+    fetchHcode();
+    inputRef.current.focus();
+  }, [authLoading, token, profile]);
 
   const fetchReviewStatus = async () => {
     try {

@@ -35,7 +35,7 @@ export default function Header({ onOpenMenu }) {
           setHcode(res.data.hospital.code);
         }
       } catch (err) {
-        // ไม่ร้องก็ได้ แค่เผื่อไม่ให้หน้าแตกถ้าเน็ตเดี้ยง
+        // ไม่ร้องก็ได้ แค่เผื่อไม่ให้หน้าพังถ้าเน็ตหาย
         console.log("fetchHospitalInfo:", err?.name || err);
       }
     })();
