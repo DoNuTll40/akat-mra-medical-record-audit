@@ -57,7 +57,7 @@ export default function ModalVerifyOtp({ open, onClose, onVerify,  onResend, tok
               color: "success",
               shouldShowTimeoutProgress: true,
             })
-            window.location.assign("/");
+            window.location.assign("/mra");
         }
 
     } catch (err) {
