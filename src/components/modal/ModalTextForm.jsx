@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Ripple from "material-ripple-effects";
-import { ListFilterPlus, ListMinus, X } from "lucide-react";
+import { ListFilterPlus, ListMinus, Save, X } from "lucide-react";
 import { Input } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
 import { Checkbox, CheckboxGroup } from "@heroui/checkbox";
@@ -233,18 +233,18 @@ export default function ModalTextForm({
             whileTap={{ scale: 0.98 }}
             onClick={hdlClose}
             onMouseUp={(e) => ripple.create(e, "dark")}
-            className="cursor-pointer px-4 py-2 rounded-md text-sm bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-zinc-800 dark:text-zinc-100"
+            className="cursor-pointer px-6 py-1.5 rounded-xl text-sm bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-zinc-800 dark:text-zinc-100"
           >
             ยกเลิก
           </motion.button>
           <motion.button
             whileTap={{ scale: 0.98 }}
             type="submit"
-            className="cursor-pointer px-8 py-2 rounded-md text-sm bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-0.5 cursor-pointer px-8 py-1.5 rounded-xl text-sm bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
             onMouseUp={(e) => ripple.create(e, "dark")}
             disabled={loading}
           >
-            {computedSubmitText}
+            <Save size={17} strokeWidth={1.5} />{computedSubmitText}
           </motion.button>
         </div>
       </motion.form>

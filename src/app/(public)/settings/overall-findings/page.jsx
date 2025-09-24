@@ -241,7 +241,7 @@ export default function Page() {
                 setEditValues(null); // โหมดเพิ่ม
                 setModalOpen(true);
               }}
-              className="flex gap-0.5 items-center px-3 py-2 text-sm cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 dark:hover:bg-emerald-700"
+              className="flex gap-0.5 items-center px-3 py-2 text-sm cursor-pointer bg-emerald-600 text-white rounded-full hover:bg-emerald-500 dark:hover:bg-emerald-700"
               whileTap={{ scale: 0.98 }}>
               <ListFilterPlus size={18} />
               เพิ่มหัวข้อ

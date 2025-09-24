@@ -215,20 +215,20 @@ export default function page() {
       {
         type: "text",
         name: "review_status_name",
-        label: "ENG",
-        placeholder: "เช่น การจัดเรียงเวชระเบียน....",
+        label: "หัวข้อ (ENG)",
+        placeholder: "เช่น Documentation....",
         required: true,
         radius: "sm",
       },
       {
         type: "text",
         name: "review_status_description",
-        label: "ENG",
-        placeholder: "เช่น การจัดเรียงเวชระเบียน....",
+        label: "หัวข้อ (THA)",
+        placeholder: "เช่น ข้อมูลไม่....",
         required: true,
         radius: "sm",
       },
-      { type: "checkbox", name: "review_status_type", label: "สถานะ", defaultValue: false },
+      { type: "checkbox", name: "review_status_type", label: "เปิดช่องอื่นๆ", defaultValue: false },
       {
         type: "select",
         name: "patient_service_id",
@@ -269,7 +269,7 @@ export default function page() {
           <div className="flex items-center">
             <motion.button 
               onClick={() => setModalOpen(true)}
-              className="flex gap-0.5 items-center px-3 py-2 text-sm cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 dark:hover:bg-emerald-700" 
+              className="flex gap-0.5 items-center px-3 py-2 text-sm cursor-pointer bg-emerald-600 text-white rounded-full hover:bg-emerald-500 dark:hover:bg-emerald-700" 
               whileTap={{ scale: 0.98 }} >
                 <ListFilterPlus size={18} />เพิ่มหัวข้อ
             </motion.button>

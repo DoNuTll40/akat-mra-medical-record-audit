@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import Ripple from "material-ripple-effects";
 import Forbidden from "@/components/Forbidden";
 import ButtonCellRenderer from "@/components/table/ButtonCellRenderer";
+import Image from "next/image";
 
 export default function page() {
   const [ token, setToken ] = useState(localStorage.getItem("token"));
@@ -275,7 +276,7 @@ export default function page() {
           <div className="flex items-center">
             <motion.button 
               onClick={() => setModalOpen(true)}
-              className="flex gap-0.5 items-center px-3 py-2 text-sm cursor-pointer bg-emerald-600 text-white rounded-md hover:bg-emerald-500 dark:hover:bg-emerald-700" 
+              className="flex gap-0.5 items-center px-3 py-2 text-sm cursor-pointer bg-emerald-600 text-white rounded-full hover:bg-emerald-500 dark:hover:bg-emerald-700" 
               whileTap={{ scale: 0.98 }} >
                 <ListFilterPlus size={18} />เพิ่มหัวข้อ
             </motion.button>
