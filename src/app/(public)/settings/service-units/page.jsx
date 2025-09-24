@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 import AppDataGrid from "@/components/table/AppDataGrid";
 import { motion } from "framer-motion";
 import { convertDateTime } from "@/utils/convertDate";
-import { ListFilterPlus } from "lucide-react";
+import { ListFilterPlus, SquarePen, Trash2 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import ModalSystemUnit from "@/components/modal/ModalSystemUnit";
 import { addToast } from "@heroui/toast";
 import Ripple from "material-ripple-effects";
 import LoadingCenter from "@/components/loading";
 import Forbidden from "@/components/Forbidden";
+import ButtonCellRenderer from "@/components/table/ButtonCellRenderer";
 
 export default function page() {
 
@@ -31,30 +32,6 @@ export default function page() {
     return <Forbidden />
   }
 
-  const ButtonCellRenderer = (props) => {
-    const handleClick = () => {
-      setEditValues(props.data);
-      setModalOpen(true);
-    };
-
-    return (
-      <div className="flex gap-1 w-full justify-between items-center px-4">
-        <button onClick={handleClick}>แก้ไข</button>
-        <Popover showArrow backdrop="opaque" offset={10} placement="bottom-end">
-          <PopoverTrigger>
-            <motion.button className="text-rose-700 font-semibold cursor-pointer">
-              ลบ
-            </motion.button>
-          </PopoverTrigger>
-          <PopoverContent className="flex flex-col gap-2 p-4" >
-            <p>กด "ยืนยัน" เพื่อลบหัวข้อ {props.data.patient_service_name_english} ออกจากระบบ</p>
-            <motion.button className="w-full text-rose-700 font-semibold py-2 hover:bg-red-50 dark:hover:bg-rose-800 rounded-lg dark:bg-rose-700 dark:text-white cursor-pointer" onMouseUp={(e) => ripple.create(e)} onClick={() => hdlDelete(props.data.patient_service_id)}>ยืนยัน</motion.button>
-          </PopoverContent>
-        </Popover>
-      </div>
-    );
-  };
-
   const columnDefs = [
     { field: "numeric_id", headerName: "ลำดับ", minWidth: 80, maxWidth: 80 },
     { field: "patient_service_name_english", headerName: "EN", minWidth: 200},
@@ -65,7 +42,16 @@ export default function page() {
     { field: "updated_by", headerName: "ชื่อที่แก้ไข", minWidth: 200},
     {
       headerName: 'ตัวเลือก',
-      cellRenderer: ButtonCellRenderer,
+      cellRenderer: (props) => ( 
+        <ButtonCellRenderer 
+          isEdit={setEditValues} 
+          isOpenEdit={setModalOpen} 
+          hdlDelete={hdlDelete} 
+          data={props.data} 
+          title={props.data.patient_service_name_english} 
+          id={props.data.patient_service_id} 
+        /> 
+      ),
       minWidth: 130,
       maxWidth: 130,
       pinned: 'right',
@@ -192,7 +178,7 @@ export default function page() {
           <div className="flex items-center">
             <motion.button 
               onClick={() => setModalOpen(true)}
-              className="flex gap-0.5 items-center px-3 py-2 text-sm cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 dark:hover:bg-emerald-700" 
+              className="flex gap-0.5 items-center px-3 py-2 text-sm cursor-pointer bg-emerald-600 text-white rounded-full hover:bg-emerald-500 dark:hover:bg-emerald-700" 
               whileTap={{ scale: 0.98 }} >
                 <ListFilterPlus size={18} />เพิ่มหัวข้อ
             </motion.button>

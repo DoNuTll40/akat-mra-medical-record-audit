@@ -15,6 +15,7 @@ import { ListFilterPlus } from "lucide-react";
 import LoadingCenter from "@/components/loading";
 import { addToast } from "@heroui/toast";
 import Forbidden from "@/components/Forbidden";
+import ButtonCellRenderer from "@/components/table/ButtonCellRenderer";
 
 export default function page() {
   const { resolvedTheme } = useTheme();
@@ -35,39 +36,6 @@ export default function page() {
   if(localStorage.getItem("token") === null){
     return <Forbidden />
   }
-
-  const ButtonCellRenderer = (props) => {
-    const handleClick = () => {
-      // ค่าที่จะส่งไปให้ modal
-      setEditValues({
-        review_status_name: props.data?.review_status_name ?? "",
-        review_status_description: props.data?.review_status_description,
-        review_status_type: props.data?.review_status_type,
-        patient_service_id: props.data?.patient_service_id,
-        review_status_id: props.data?.review_status_id
-      });
-      setModalOpen(true);
-    };
-
-    return (
-      <div className="flex gap-1 w-full justify-between items-center px-4">
-        <motion.button whileTap={{ scale: 0.98 }} onClick={handleClick}>แก้ไข</motion.button>
-        <Popover showArrow backdrop="opaque" offset={10} placement="bottom-end">
-          <PopoverTrigger>
-            <motion.button className="text-rose-700 font-semibold cursor-pointer">ลบ</motion.button>
-          </PopoverTrigger>
-          <PopoverContent className="flex flex-col gap-2 p-4">
-            <p>กด "ยืนยัน" เพื่อลบหัวข้อ {props.data?.review_status_name ?? "-"} ออกจากระบบ</p>
-            <motion.button
-              className="w-full text-rose-700 font-semibold py-2 hover:bg-red-50 dark:hover:bg-rose-800 rounded-lg dark:bg-rose-700 dark:text-white cursor-pointer"
-              onMouseUp={(e) => ripple.create(e)}
-              onClick={() => hdlDelete(props.data?.review_status_id)}
-            >ยืนยัน</motion.button>
-          </PopoverContent>
-        </Popover>
-      </div>
-    );
-  };
 
   const columnDefs = [
     { field: "numeric_id", headerName: "ลำดับ", minWidth: 80, maxWidth: 80 },
@@ -98,7 +66,16 @@ export default function page() {
     { field: "updated_by", headerName: "ชื่อที่แก้ไข", minWidth: 150},
     {
       headerName: 'ตัวเลือก',
-      cellRenderer: ButtonCellRenderer,
+      cellRenderer: (props) => ( 
+        <ButtonCellRenderer 
+          isEdit={setEditValues} 
+          isOpenEdit={setModalOpen} 
+          hdlDelete={hdlDelete} 
+          data={props.data} 
+          title={props.data.review_status_name} 
+          id={props.data.review_status_id} 
+        /> 
+      ),
       minWidth: 130,
       maxWidth: 130,
       pinned: 'right',

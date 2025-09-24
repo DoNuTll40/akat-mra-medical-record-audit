@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import LoginCard from "@/components/LoginCard";
 import BrandMark from "@/components/BrandMark";
 import { notFound } from "next/navigation";
+import LoadingCenter from "@/components/loading";
+import AuthenHook from "@/hooks/AuthenHook.mjs";
 
 const splashVariants = {
   hidden: { opacity: 0, y: -24 },
@@ -49,6 +51,7 @@ function Splash({ visible }) {
 
 export default function LoginPage() {
   const [showSplash, setShowSplash] = useState(true);
+  const { authLoading } = AuthenHook();
 
   useEffect(() => {
     const profile = JSON.parse(localStorage.getItem("profile"));
@@ -64,6 +67,11 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-dvh">
+      {(authLoading) && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center dark:bg-black/80 bg-white/40 backdrop-blur-sm">
+          <LoadingCenter />
+        </div>
+      )}
       <div className="mx-auto flex h-dvh max-w-6xl items-center justify-center px-4">
         <div className="relative w-full max-w-md">
           {/* Splash */}

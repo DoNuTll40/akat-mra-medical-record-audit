@@ -684,7 +684,7 @@ export default function Page() {
                 <p className="text-sm mb-2">ตัวเลือก</p>
               </div>
               <div className="w-full items-center">
-                <motion.button onClick={() => setOpenModelDelete(true)} disabled={!pdfReady} className="w-full text-sm text-center text-rose-700 font-semibold px-6 py-2 hover:bg-red-50 dark:hover:bg-rose-800 rounded-xl dark:bg-rose-700 dark:text-white cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" >ลบข้อมูล</motion.button>
+                <motion.button onClick={() => setOpenModelDelete(true)} disabled={!pdfReady} className="w-full text-sm text-center text-rose-700 border-rose-700 !disabled:dark:hover:border-rose-800 border font-semibold px-6 py-2 hover:bg-red-50 !disabled:dark:hover:bg-rose-800 rounded-xl dark:bg-rose-700 dark:text-white cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" >ลบข้อมูล</motion.button>
               </div>
             </div>
           </div>
@@ -748,8 +748,8 @@ export default function Page() {
       { formData.review_status_id && !pdfReady && (
         <motion.button
           onClick={onSubmit}
-          className="w-full mt-4 text-emerald-700 font-semibold py-2 hover:bg-red-50 dark:hover:bg-emerald-800 rounded-xl dark:bg-emerald-700 dark:text-white cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-          onMouseUp={(e) => ripple.create(e)}
+          className="w-full mt-4 text-emerald-700 font-semibold py-2 bg-emerald-50 border border-emerald-700 dark:hover:bg-emerald-800 rounded-2xl dark:bg-emerald-700 dark:text-white cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+          onMouseDown={(e) => ripple.create(e)}
           disabled={generatePdf}
         >{generatePdf ? "กำลังบันทึกข้อมูล" : "บันทึก"}</motion.button>
       )}

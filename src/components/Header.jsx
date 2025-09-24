@@ -107,7 +107,7 @@ export default function Header({ onOpenMenu }) {
                       className={`absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-black ${statusDotClass}`}
                     />
                   </div>
-                  <div>
+                  <div className="sm:block hidden">
                     <p className="text-xs font-medium">
                       {profile?.fullname ?? "ผู้ใช้ไร้ชื่อ"}
                     </p>
@@ -123,19 +123,28 @@ export default function Header({ onOpenMenu }) {
                   key="profile"
                   startContent={<UserRound className="size-4" />}
                   description={ <p className="max-w-[260px]">ระบบจะเปิดระบบ BackOffice เพื่อดูโปรไฟล์</p> }
-                  onClick={() => router.push("https://akathos.moph.go.th/backoffice/person/user/personinfouser")}
+                  onPress={() => window.open(
+                    "https://akathos.moph.go.th/backoffice/person/user/personinfouser",
+                    "_blank",
+                    "noopener,noreferrer"
+                  )}
                   endContent={ <ExternalLink className="size-4" /> }
                 >
+                  <a target="_blank" rel="noopener noreferrer">
                   โปรไฟล์ของฉัน
+                  </a>
                 </DropdownItem>
 
                 <DropdownItem
                   key="avatar"
+                  target="_blank"
                   startContent={ <Camera className="size-5" /> }
                   description={ <p className="max-w-[260px]">รูปภาพจาก Gravatar โดยเข้าสู่ระบบด้วยบัญชีเมลของ BackOffice</p> }
-                  onClick={() =>
-                    router.push(
-                      "https://wordpress.com/log-in/link?client_id=1854&redirect_to=https%3A%2F%2Fpublic-api.wordpress.com%2Foauth2%2Fauthorize%3Fclient_id%3D1854%26response_type%3Dcode%26blog_id%3D0%26state%3D2aad56dbbdbb3d152f0d9d56388391894abcc2d13be7a455933828035782b571%26redirect_uri%3Dhttps%253A%252F%252Fgravatar.com%252Fconnect%252F%253Faction%253Drequest_access_token%26from-calypso%3D1"
+                  onPress={() =>
+                    window.open(
+                      "https://wordpress.com/log-in/link?client_id=1854&redirect_to=https%3A%2F%2Fpublic-api.wordpress.com%2Foauth2%2Fauthorize%3Fclient_id%3D1854%26response_type%3Dcode%26blog_id%3D0%26state%3D2aad56dbbdbb3d152f0d9d56388391894abcc2d13be7a455933828035782b571%26redirect_uri%3Dhttps%253A%252F%252Fgravatar.com%252Fconnect%252F%253Faction%253Drequest_access_token%26from-calypso%3D1",
+                      "_blank",
+                      "noopener,noreferrer"
                     )
                   }
                   endContent={ <ExternalLink className="size-4" /> }

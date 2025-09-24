@@ -12,6 +12,7 @@ import { ListFilterPlus } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { addToast } from "@heroui/toast";
 import Forbidden from "@/components/Forbidden";
+import ButtonCellRenderer from "@/components/table/ButtonCellRenderer";
 
 export default function Page() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,37 +31,6 @@ export default function Page() {
 
   const ripple = new Ripple();
 
-  const ButtonCellRenderer = (props) => {
-    const handleClick = () => {
-      // ค่าที่จะส่งไปให้ modal
-      setEditValues({
-        overall_finding_name: props.data?.overall_finding_name ?? "",
-        patient_service_id: props.data?.patient_service_id,
-        overall_finding_id: props.data?.overall_finding_id
-      });
-      setModalOpen(true);
-    };
-
-    return (
-      <div className="flex gap-1 w-full justify-between items-center px-4">
-        <motion.button whileTap={{ scale: 0.98 }} onClick={handleClick}>แก้ไข</motion.button>
-        <Popover showArrow backdrop="opaque" offset={10} placement="bottom-end">
-          <PopoverTrigger>
-            <motion.button className="text-rose-700 font-semibold cursor-pointer">ลบ</motion.button>
-          </PopoverTrigger>
-          <PopoverContent className="flex flex-col gap-2 p-4">
-            <p>กด "ยืนยัน" เพื่อลบหัวข้อ {props.data?.overall_finding_name ?? "-"} ออกจากระบบ</p>
-            <motion.button
-              className="w-full text-rose-700 font-semibold py-2 hover:bg-red-50 dark:hover:bg-rose-800 rounded-lg dark:bg-rose-700 dark:text-white cursor-pointer"
-              onMouseUp={(e) => ripple.create(e)}
-              onClick={() => hdlDelete(props.data?.overall_finding_id)}
-            >ยืนยัน</motion.button>
-          </PopoverContent>
-        </Popover>
-      </div>
-    );
-  };
-
   const columnDefs = [
     { field: "numeric_id", headerName: "ลำดับ", minWidth: 80, maxWidth: 80 },
     { field: "overall_finding_name", headerName: "หัวข้อ", minWidth: 200 },
@@ -78,7 +48,20 @@ export default function Page() {
     { field: "updated_by", headerName: "ชื่อที่แก้ไข", minWidth: 200 },
     {
       headerName: "ตัวเลือก",
-      cellRenderer: ButtonCellRenderer,
+      cellRenderer: (props) => ( 
+        <ButtonCellRenderer 
+          isEdit={() => setEditValues({
+            overall_finding_name: props.data?.overall_finding_name ?? "",
+            patient_service_id: props.data?.patient_service_id,
+            overall_finding_id: props.data?.overall_finding_id
+          })} 
+          isOpenEdit={setModalOpen} 
+          hdlDelete={hdlDelete} 
+          data={props.data} 
+          title={props.data.overall_finding_name} 
+          id={props.data.overall_finding_name} 
+        /> 
+      ),
       minWidth: 130,
       maxWidth: 130,
       pinned: "right",
@@ -223,7 +206,7 @@ export default function Page() {
     {
       type: "text",
       name: "overall_finding_name",
-      label: "ENG",
+      label: "หัวข้อ",
       placeholder: "เช่น การจัดเรียงเวชระเบียน....",
       required: true,
       radius: "sm",

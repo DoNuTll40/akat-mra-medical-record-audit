@@ -5,6 +5,6 @@ export const metadata = {
 
 export default function layout({children}) {
   return (
-    <div>{children}</div>
+    <>{children}</>
   )
 }

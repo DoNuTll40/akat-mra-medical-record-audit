@@ -83,6 +83,9 @@ function AuthenContextProvider({ children }) {
 
   const logout = async () => {
     setAuthLoading(true);
+
+    if(localStorage.getItem("token") === null) return window.location.reload();
+
     try {
       const rs = await axiosApi.post(
         "/auth/logout",

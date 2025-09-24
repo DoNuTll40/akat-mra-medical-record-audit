@@ -14,6 +14,7 @@ import LoadingCenter from "@/components/loading";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import Ripple from "material-ripple-effects";
 import Forbidden from "@/components/Forbidden";
+import ButtonCellRenderer from "@/components/table/ButtonCellRenderer";
 
 export default function page() {
   const [ token, setToken ] = useState(localStorage.getItem("token"));
@@ -40,30 +41,6 @@ export default function page() {
   if(localStorage.getItem("token") === null){
     return <Forbidden />
   }
-
-  const ButtonCellRenderer = (props) => {
-    const handleClick = () => {
-      setEditValues(props.data);
-      setModalOpen(true);
-    };
-
-    return (
-      <div className="flex gap-1 w-full justify-between items-center px-4">
-        <button onClick={handleClick}>แก้ไข</button>
-        <Popover showArrow backdrop="opaque" offset={10} placement="bottom-end">
-          <PopoverTrigger>
-            <motion.button className="text-rose-700 font-semibold cursor-pointer">
-              ลบ
-            </motion.button>
-          </PopoverTrigger>
-          <PopoverContent className="flex flex-col gap-2 p-4" >
-            <p>กด "ยืนยัน" เพื่อลบหัวข้อ {props.data.content_of_medical_record_name} ออกจากระบบ</p>
-            <motion.button className="w-full text-rose-700 font-semibold py-2 hover:bg-red-50 dark:hover:bg-rose-800 rounded-lg dark:bg-rose-700 dark:text-white cursor-pointer" onMouseUp={(e) => ripple.create(e)} onClick={() => hdlDelete(props.data.content_of_medical_record_id)}>ยืนยัน</motion.button>
-          </PopoverContent>
-        </Popover>
-      </div>
-    );
-  };
 
   const hdlSubmit = async (data) => {
 
@@ -218,7 +195,16 @@ export default function page() {
     },
     {
       headerName: 'ตัวเลือก',
-      cellRenderer: ButtonCellRenderer,
+      cellRenderer: (props) => ( 
+        <ButtonCellRenderer 
+          isEdit={setEditValues} 
+          isOpenEdit={setModalOpen} 
+          hdlDelete={hdlDelete} 
+          data={props.data} 
+          title={props.data.content_of_medical_record_name} 
+          id={props.data.content_of_medical_record_id} 
+        /> 
+      ),
       minWidth: 130,
       maxWidth: 130,
       pinned: 'right',
