@@ -415,7 +415,7 @@ export default function Page() {
       };
     }),
     {
-      field: "points_deducted",
+      field: "point_deducted",
       headerName: "หักคะแนน",
       minWidth: 90,
       cellRenderer: "agCheckboxCellRenderer",
