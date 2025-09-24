@@ -58,7 +58,7 @@ export default function DashboardShowcase() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 select-none">
       {/* แถวสถิติบนสุด */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
@@ -148,9 +148,9 @@ function StatCard({ icon, label, value, hint }) {
     <motion.div
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-zinc-300 dark:border-[#505050] bg-white dark:bg-[#181818] p-4"
+      className="rounded-2xl border border-zinc-300 dark:border-[#505050] bg-white dark:bg-[#181818] p-4 shadow-lg shadow-zinc-950/5"
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-start gap-3">
         <div className="rounded-xl bg-zinc-100 dark:bg-zinc-800 p-2.5">{icon}</div>
         <div>
           <p className="text-xs text-zinc-500 dark:text-zinc-400">{label}</p>
@@ -165,12 +165,12 @@ function StatCard({ icon, label, value, hint }) {
 function WardRow({ name, value, total }) {
   const pct = Math.min(100, Math.round((Number(value || 0) / total) * 100));
   return (
-    <div className="rounded-xl border border-zinc-200 dark:border-[#3a3a3a] p-3">
+    <div className="rounded-xl border backdrop-blur-2xl bg-white/5 border-zinc-200 dark:border-[#3a3a3a] p-3 shadow-lg shadow-zinc-950/5 dark:shadow-zinc-800/40">
       <div className="flex items-center justify-between">
         <p className="font-medium">{name}</p>
         <p className="text-sm text-zinc-600 dark:text-zinc-300">{Number(value).toLocaleString("th-TH")}</p>
       </div>
-      <div className="mt-2 h-2 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+      <div className="mt-2 h-2 w-full rounded-full bg-zinc-100 dark:bg-zinc-600 overflow-hidden">
         <div
           className="h-full rounded-full bg-emerald-500 dark:bg-emerald-600"
           style={{ width: `${pct}%` }}
@@ -183,7 +183,7 @@ function WardRow({ name, value, total }) {
 
 function ServiceCard({ name, value }) {
   return (
-    <div className="rounded-xl border border-zinc-200 dark:border-[#3a3a3a] p-3 bg-[#FAFAFB] dark:bg-[#151515]">
+    <div className="rounded-xl border border-zinc-200 dark:border-[#3a3a3a] p-3 bg-white/5 backdrop-blur-2xl shadow-lg shadow-zinc-950/5 dark:shadow-zinc-800/40">
       <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">{name}</p>
       <p className="text-xl font-semibold">{Number(value).toLocaleString("th-TH")}</p>
     </div>
