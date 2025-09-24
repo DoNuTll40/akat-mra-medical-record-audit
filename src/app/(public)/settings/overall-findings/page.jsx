@@ -11,6 +11,7 @@ import ModalTextForm from "@/components/modal/ModalTextForm";
 import { ListFilterPlus } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { addToast } from "@heroui/toast";
+import Forbidden from "@/components/forbidden";
 
 export default function Page() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,6 +22,11 @@ export default function Page() {
   const [loadingUpdate, setLoadingUpdate] = useState(false);
   const [rowData, setRowData] = useState([]);
   const [ fetchPatinet, setFetchPatient ] = useState([]);
+  const [ token, setToken ] = useState(localStorage.getItem("token"));
+
+  if(localStorage.getItem("token") === null){
+    return <Forbidden />
+  }
 
   const ripple = new Ripple();
 

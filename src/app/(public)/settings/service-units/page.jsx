@@ -11,6 +11,7 @@ import ModalSystemUnit from "@/components/modal/ModalSystemUnit";
 import { addToast } from "@heroui/toast";
 import Ripple from "material-ripple-effects";
 import LoadingCenter from "@/components/loading";
+import Forbidden from "@/components/forbidden";
 
 export default function page() {
 
@@ -22,8 +23,13 @@ export default function page() {
   const [ loadingUpdate, setLoadingUpdate ] = useState(false);
 
   const [ rowData, setRowData ] = useState([]);
+  const [ token, setToken ] = useState(localStorage.getItem("token"));
 
   const ripple = new Ripple();
+
+  if(localStorage.getItem("token") === null){
+    return <Forbidden />
+  }
 
   const ButtonCellRenderer = (props) => {
     const handleClick = () => {

@@ -14,6 +14,7 @@ import ModalTextForm from "@/components/modal/ModalTextForm";
 import { ListFilterPlus } from "lucide-react";
 import LoadingCenter from "@/components/loading";
 import { addToast } from "@heroui/toast";
+import Forbidden from "@/components/forbidden";
 
 export default function page() {
   const { resolvedTheme } = useTheme();
@@ -26,9 +27,14 @@ export default function page() {
   const [loadingUpdate, setLoadingUpdate] = useState(false);
   const [rowData, setRowData] = useState([]);
   const [ fetchPatinet, setFetchPatient ] = useState([]);
+  const [ token, setToken ] = useState(localStorage.getItem("token"));
   
   const ripple = new Ripple();
   useEffect(() => setMounted(true), []);
+
+  if(localStorage.getItem("token") === null){
+    return <Forbidden />
+  }
 
   const ButtonCellRenderer = (props) => {
     const handleClick = () => {

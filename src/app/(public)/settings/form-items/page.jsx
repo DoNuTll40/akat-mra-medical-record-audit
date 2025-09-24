@@ -13,8 +13,10 @@ import { addToast } from "@heroui/toast";
 import LoadingCenter from "@/components/loading";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import Ripple from "material-ripple-effects";
+import Forbidden from "@/components/forbidden";
 
 export default function page() {
+  const [ token, setToken ] = useState(localStorage.getItem("token"));
   const { resolvedTheme } = useTheme();
   const [ mounted, setMounted ] = useState(false);
   const [ loading, setLoading ] = useState(false);
@@ -24,7 +26,7 @@ export default function page() {
 
   const ripple = new Ripple();
 
-  const { token, authLoading } = AuthenHook();
+  const { authLoading } = AuthenHook();
 
   const [ modalOpen, setModalOpen ] = useState(false);
   const [ editValues, setEditValues ] = useState(null);
@@ -34,6 +36,10 @@ export default function page() {
   useEffect(() => setMounted(true), []);
 
   const [ rowData, setRowData ] = useState([]);
+
+  if(localStorage.getItem("token") === null){
+    return <Forbidden />
+  }
 
   const ButtonCellRenderer = (props) => {
     const handleClick = () => {
