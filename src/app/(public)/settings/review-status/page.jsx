@@ -14,7 +14,7 @@ import ModalTextForm from "@/components/modal/ModalTextForm";
 import { ListFilterPlus } from "lucide-react";
 import LoadingCenter from "@/components/loading";
 import { addToast } from "@heroui/toast";
-import Forbidden from "@/components/forbidden";
+import Forbidden from "@/components/Forbidden";
 
 export default function page() {
   const { resolvedTheme } = useTheme();

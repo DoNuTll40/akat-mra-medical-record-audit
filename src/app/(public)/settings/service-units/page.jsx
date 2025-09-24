@@ -11,7 +11,7 @@ import ModalSystemUnit from "@/components/modal/ModalSystemUnit";
 import { addToast } from "@heroui/toast";
 import Ripple from "material-ripple-effects";
 import LoadingCenter from "@/components/loading";
-import Forbidden from "@/components/forbidden";
+import Forbidden from "@/components/Forbidden";
 
 export default function page() {
 

@@ -13,7 +13,7 @@ import { addToast } from "@heroui/toast";
 import LoadingCenter from "@/components/loading";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import Ripple from "material-ripple-effects";
-import Forbidden from "@/components/forbidden";
+import Forbidden from "@/components/Forbidden";
 
 export default function page() {
   const [ token, setToken ] = useState(localStorage.getItem("token"));

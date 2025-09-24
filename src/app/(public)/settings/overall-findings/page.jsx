@@ -11,7 +11,7 @@ import ModalTextForm from "@/components/modal/ModalTextForm";
 import { ListFilterPlus } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { addToast } from "@heroui/toast";
-import Forbidden from "@/components/forbidden";
+import Forbidden from "@/components/Forbidden";
 
 export default function Page() {
   const [modalOpen, setModalOpen] = useState(false);
