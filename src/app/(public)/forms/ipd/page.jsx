@@ -497,6 +497,7 @@ export default function Page() {
   }
 
   const onSubmit = async () => {
+    setLoadingSubmit(true);
     let token = localStorage.getItem("token");
     try {
       const res = await axiosApi.put(`/mraIpd/${an}`, formData, {
@@ -511,6 +512,8 @@ export default function Page() {
       }
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoadingSubmit(false);
     }
   }
 
@@ -630,7 +633,7 @@ export default function Page() {
       type: "password",
       name: "password",
       label: "กรอกรหัสผ่าน",
-      placeholder: "••••••••",
+      placeholder: "**********",
       required: true,
       radius: "sm",
     },
@@ -638,9 +641,9 @@ export default function Page() {
 
   return (
     <>
-    {(loadingDelete) && (
+    {(loadingDelete || loadingSubmit) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center dark:bg-black/80 bg-white/40 backdrop-blur-sm">
-          <LoadingCenter title={loadingDelete && "กําลังลบข้อมูล..."} />
+          <LoadingCenter title={loadingDelete ? "กําลังลบข้อมูล..." : "กําลังบันทึกข้อมูล..."} />
         </div>
       )}
       <ModalTextForm isOpen={openModelDelete} onClose={() => setOpenModelDelete(false)} delModal={true} title={`คุณต้องการลบข้อมูล ${maskANPretty(an, { keepStart: 2, keepEnd: 2 })}`} onSubmit={hdlDelete} fields={field} />

@@ -45,6 +45,7 @@ export default function ModalSystemUnit({ isOpen, onClose, fetchPatient, onSubmi
         transition={{ duration: 0.2, ease: "easeOut" }}
         onSubmit={handleSubmit}
         className="bg-white dark:bg-[#181818] w-full max-w-lg rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-700"
+        onMouseDown={(e) => { e.target === e.currentTarget && hdlCloseModal(); }}
       >
         {/* header */}
         <div className="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-700 px-4 py-2">
