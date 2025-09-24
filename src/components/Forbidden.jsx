@@ -1,4 +1,4 @@
-// app/(public)/forbidden/page.tsx
+// components/Forbidden.jsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -10,10 +10,16 @@ import { usePathname } from "next/navigation";
 export default function Forbidden() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  
   useEffect(() => setMounted(true), []);
 
   const back = () => {
-    if (window.history.length > 1) window.history.back();
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // ไม่มีหน้าก่อนหน้า ก็พาไป login หรือ root แบบ hard nav
+      window.location.replace("/auth/login");
+    }
   };
 
   return (
@@ -90,6 +96,8 @@ export default function Forbidden() {
 
           <Link
             href="/mra" // เปลี่ยนให้เป็น dashboard จริงของนาย
+            prefetch={false}
+            replace
             className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2 font-semibold text-white
                        hover:bg-emerald-400 active:scale-[0.98] transition"
           >
@@ -99,6 +107,8 @@ export default function Forbidden() {
 
           <Link
             href="/auth/login" // เปลี่ยนให้เป็น path login ของนาย
+            prefetch={false}
+            replace
             className="inline-flex items-center gap-2 rounded-lg border border-zinc-700 px-4 py-2 font-semibold
                       text-zinc-900 hover:bg-zinc-200 dark:text-zinc-200 dark:hover:bg-zinc-800/60 active:scale-[0.98] transition"
           >

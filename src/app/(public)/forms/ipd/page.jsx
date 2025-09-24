@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { forbidden } from "next/navigation";
 import LoadingCenter from "@/components/loading";
 import AuthenHook from "@/hooks/AuthenHook.mjs";
 import axiosApi from "@/config/axios-api";
@@ -19,6 +18,7 @@ import { PDFViewer } from "@react-pdf/renderer";
 import { addToast } from "@heroui/toast";
 import ModalTextForm from "@/components/modal/ModalTextForm";
 import maskANPretty from "@/utils/maskANPretty";
+import Forbidden from "@/components/Forbidden";
 
 export default function Page() {
   const { resolvedTheme } = useTheme();
@@ -62,8 +62,8 @@ export default function Page() {
     return <LoadingCenter />;
   }
 
-  if (!token) {
-    return <p>คุณยังไม่ได้เข้าสู่ระบบ</p>
+  if(localStorage.getItem("token") === null){
+    return <Forbidden />
   }
 
   const onGridReady = useCallback((event) => {
@@ -203,11 +203,6 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (authLoading) return;
-
-    // // ถ้าไม่มี token หรือชื่อว่าง ให้ forbidden แล้วหยุด
-    // if (!token || !profile?.fullname?.trim()) return <p>คุณยังไม่ได้เข้าสู่ระบบ</p>
-
     fetchHcode();
     inputRef.current.focus();
   }, [authLoading, token, profile]);
