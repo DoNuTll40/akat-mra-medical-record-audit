@@ -22,8 +22,9 @@ import Forbidden from "@/components/Forbidden";
 
 export default function Page() {
   const { resolvedTheme } = useTheme();
+  const [ token, setToken ] = useState(localStorage.getItem("token"));
   const [ mounted, setMounted ] = useState(false);
-  const { profile, token, authLoading } = AuthenHook();
+  const { profile, authLoading } = AuthenHook();
   const [an, setAn] = useState("");
   const [hcode, setHcode] = useState({ hcode: "", hcode_name: "" });
   const [ rowData, setRowData ] = useState([]);
