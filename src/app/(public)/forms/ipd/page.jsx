@@ -24,8 +24,8 @@ export default function Page() {
   const { resolvedTheme } = useTheme();
   const [ mounted, setMounted ] = useState(false);
   const { profile, token, authLoading } = AuthenHook();
-  const [ hcode, setHcode ] = useState(null);
-  const [ an, setAn ] = useState(null);
+  const [an, setAn] = useState("");
+  const [hcode, setHcode] = useState({ hcode: "", hcode_name: "" });
   const [ rowData, setRowData ] = useState([]);
   const [ overallData, setOverallData ] = useState([]);
   const [ reviewStatus, setReviewStatus ] = useState(null);
