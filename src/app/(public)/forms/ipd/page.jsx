@@ -454,7 +454,7 @@ export default function Page() {
     const updatedData = []; // สร้างตัวแปรสําหรับเก็บข้อมูล
 
     event.api.forEachNode((node) => { // วนลูปใน AGGrid
-      updatedData.push(node.data); // เพิ่มข้อมูลใน node.data ไปยัง updatedData
+      updatedData.push({ ...node.data }); // เพิ่มข้อมูลใน node.data ไปยัง updatedData
     }); // วนลูปใน AGGrid
 
     setFormData((output) => ({

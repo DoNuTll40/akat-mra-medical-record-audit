@@ -37,7 +37,13 @@ export default function ModalSystemUnit({ isOpen, onClose, fetchPatient, onSubmi
   }
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/20 backdrop-blur-sm px-4">
+    <motion.div
+      className="fixed inset-0 z-40 flex items-center justify-center bg-black/20 backdrop-blur-sm px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onMouseDown={(e) => { e.target === e.currentTarget && hdlCloseModal(); }}
+      >
       <motion.form
         initial={{ opacity: 0, scale: 0.9, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -45,7 +51,6 @@ export default function ModalSystemUnit({ isOpen, onClose, fetchPatient, onSubmi
         transition={{ duration: 0.2, ease: "easeOut" }}
         onSubmit={handleSubmit}
         className="bg-white dark:bg-[#181818] w-full max-w-lg rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-700"
-        onMouseDown={(e) => { e.target === e.currentTarget && hdlCloseModal(); }}
       >
         {/* header */}
         <div className="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-700 px-4 py-2">
@@ -105,6 +110,6 @@ export default function ModalSystemUnit({ isOpen, onClose, fetchPatient, onSubmi
           </motion.button>
         </div>
       </motion.form>
-    </div>
+    </motion.div>
   );
 }

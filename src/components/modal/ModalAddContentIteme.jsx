@@ -119,7 +119,13 @@ export default function ModalAddContentIteme({ isOpen, onClose, fetchPatient, on
   }
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/20 backdrop-blur-sm px-4">
+    <motion.div
+      className="fixed inset-0 z-40 flex items-center justify-center bg-black/20 backdrop-blur-sm px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onMouseDown={(e) => { e.target === e.currentTarget && hdlCloseModal(); }}
+      >
       <motion.form
         initial={{ opacity: 0, scale: 0.9, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -199,6 +205,6 @@ export default function ModalAddContentIteme({ isOpen, onClose, fetchPatient, on
           </motion.button>
         </div>
       </motion.form>
-    </div>
+    </motion.div>
   );
 }
