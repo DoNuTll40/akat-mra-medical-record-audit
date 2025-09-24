@@ -57,7 +57,7 @@ export default function ModalVerifyOtp({ open, onClose, onVerify,  onResend, tok
               color: "success",
               shouldShowTimeoutProgress: true,
             })
-            router.replace("/");
+            window.location.assign("/");
         }
 
     } catch (err) {

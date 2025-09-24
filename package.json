@@ -6,7 +6,7 @@
     "dev": "npm run prebuild && next dev -p 80 --turbopack",
     "prebuild": "node scripts/gen-manifest.js",
     "build": "next build --turbopack",
-    "start": "next start",
+    "start": "next start -p 80",
     "lint": "eslint"
   },
   "dependencies": {
