@@ -3,7 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import axiosApi from "@/config/axios-api";
 import { motion } from "framer-motion";
-import { Activity, Building2, ClipboardList, ListFilter } from "lucide-react";
+import { Activity, Building2, ClipboardList, ListFilter, ShieldAlert } from "lucide-react";
+import { ErrorBanner } from "@/components/ErrorBanner";
+import { Skeleton } from "@heroui/react";
 
 export default function DashboardShowcase() {
   const [data, setData] = useState({ countAll: 0, countWard: [], countPatientService: [] });
@@ -11,19 +13,20 @@ export default function DashboardShowcase() {
   const [err, setErr] = useState(null);
 
   useEffect(() => {
-    const fetchDashboard = async () => {
-      try {
-        const res = await axiosApi.get("/dashboard");
-        setData(res.data ?? {});
-      } catch (e) {
-        setErr(e?.response?.data?.message || "โหลดข้อมูลไม่สำเร็จ");
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchDashboard();
   }, []);
-
+  
+  const fetchDashboard = async () => {
+    try {
+      const res = await axiosApi.get("/dashboard");
+      setData(res.data ?? {});
+    } catch (e) {
+      setErr(e?.response?.data?.message || "โหลดข้อมูลไม่สำเร็จ");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   const totalWardForms = useMemo(
     () => (Array.isArray(data.countWard) ? data.countWard.reduce((s, w) => s + (Number(w?.result) || 0), 0) : 0),
     [data.countWard]
@@ -36,24 +39,28 @@ export default function DashboardShowcase() {
 
   if (loading) {
     return (
-      <div className="grid gap-4 md:grid-cols-3">
+      // <LoadingCenter />
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {[...Array(4)].map((_, i) => (
-          <div
+          <Skeleton
             key={i}
-            className="h-24 rounded-2xl border border-zinc-300 dark:border-[#505050] bg-white dark:bg-[#181818] animate-pulse"
+            className="h-24 rounded-2xl border border-zinc-300 dark:border-[#505050] bg-white dark:bg-zinc-900 shadow-lg shadow-zinc-950/5"
           />
         ))}
-        <div className="h-64 md:col-span-2 rounded-2xl border border-zinc-300 dark:border-[#505050] bg-white dark:bg-[#181818] animate-pulse" />
-        <div className="h-64 rounded-2xl border border-zinc-300 dark:border-[#505050] bg-white dark:bg-[#181818] animate-pulse" />
+        <Skeleton className="h-36 mt-6 md:col-span-1 rounded-2xl border border-zinc-300 dark:border-[#505050] bg-white dark:bg-zinc-900 shadow-lg shadow-zinc-950/5" />
+        <Skeleton className="h-36 mt-6 md:col-span-3 rounded-2xl border border-zinc-300 dark:border-[#505050] bg-white dark:bg-zinc-900 shadow-lg shadow-zinc-950/5" />
       </div>
     );
   }
 
   if (err) {
     return (
-      <div className="rounded-2xl border border-rose-300 bg-rose-50 dark:border-rose-800 dark:bg-rose-950 text-rose-700 dark:text-rose-200 p-4">
-        เกิดข้อผิดพลาด: {err}
-      </div>
+      <ErrorBanner
+        err={err}
+        onRetry={fetchDashboard}      // ฟังก์ชันเดิมของนาย
+        onDismiss={() => setErr(null)}
+        autoRetrySec={10}             // ไม่อยาก auto ก็ไม่ต้องส่ง
+      />
     );
   }
 

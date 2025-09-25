@@ -647,8 +647,18 @@ export default function Page() {
         </div>
       )}
       <ModalTextForm isOpen={openModelDelete} onClose={() => setOpenModelDelete(false)} delModal={true} title={`คุณต้องการลบข้อมูล ${maskANPretty(an, { keepStart: 2, keepEnd: 2 })}`} onSubmit={hdlDelete} fields={field} />
-      <div className="select-none rounded-2xl border border-zinc-300 dark:border-[#505050] mb-4 bg-[#FAFAFB] dark:bg-[#181818] shadow-lg">
-        <p className="font-medium border-b border-zinc-300 dark:border-[#505050] p-4">แบบตรวจประเมินคุณภาพการบันทึกเวชระเบียนผู้ป่วยใน Medical Record Audit Form (IPD) {patientAn && `| ${patientAn.ward_name}`}</p>
+      <div className="select-none rounded-2xl border border-zinc-300 dark:border-[#505050] mb-4 bg-white dark:bg-[#181818] shadow-lg">
+        <div className="flex justify-between border-b border-zinc-300 dark:border-[#505050] p-4">
+          <div className="flex gap-1 flex-col">
+            <p className="font-medium">แบบตรวจประเมินคุณภาพการบันทึกเวชระเบียนผู้ป่วยใน Medical Record Audit Form (IPD)</p>
+            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-500"><span className="font-semibold mr-1">เงื่อนไขการบันทึกเวชระเบียน</span>การบันทึกคะแนน (1) กรณีที่ผ่านเกณฑ์ในแต่ละข้อ ให้ติ๊กถูก (2) กรณีที่ไม่ผ่านเกณฑ์ในแต่ละข้อ ไม่ต้องติ๊ก (3) กรณีไม่จำเป็นต้องมีบันทึก/ไม่มีข้อมูล ในเกณฑ์ข้อที่ระบุให้มี NA ได้ ให้ NA</p>
+          </div>
+          {patientAn?.ward_name && (
+            <span className="shrink-0 h-fit rounded-full border border-zinc-300 dark:border-zinc-700 px-3 py-1 text-xs text-zinc-700 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-900/60">
+              {patientAn.ward_name}
+            </span>
+          )}
+        </div>
         <div className="p-4 flex flex-col gap-2">
           <div className="flex gap-2">
             <Input variant="bordered" radius="md" label="รหัสสถานพยาบาล" size="md" placeholder="XXXXX" value={hcode ? hcode.hcode : ""} labelPlacement="outside-top" isReadOnly />

@@ -77,11 +77,11 @@ export default function MRAFormIPD({ patients, form_ipd_content_of_medical_recor
         {/* Description Header */}
         <View>
             <Text style={[tw("text-xl"), { lineHeight: 0.9 }]}><Text style={[tw("font-bold")]} >การบันทึกช่อง NA: </Text>กรณีไม่จำเป็นต้องมีเอกสารใน Content ลำดับที่ 7, 8, 9, 10, 11 เนื่องจากไม่มีการให้บริการ ให้กากบาท ในช่อง NA</Text>
-            <Text style={[tw("text-xl"), { lineHeight: 0.9 }]}><Text style={[tw("font-bold")]} >กำรบันทึกช่อง Missing: </Text>กรณีไม่มีเอกสารให้ตรวจสอบ เวชระเบียนไม่ครบ หรือหายไป ให้ กากบาทในช่อง Missing</Text>
-            <Text style={[tw("text-xl"), { lineHeight: 0.9 }]}><Text style={[tw("font-bold")]} >กำรบันทึกช่อง No: </Text>กรณีมีเอกสารแต่ไม่มีการบันทึกในเอกสารนั้น ให้กากบาทในช่อง “No”</Text>
+            <Text style={[tw("text-xl"), { lineHeight: 0.9 }]}><Text style={[tw("font-bold")]} >การบันทึกช่อง Missing: </Text>กรณีไม่มีเอกสารให้ตรวจสอบ เวชระเบียนไม่ครบ หรือหายไป ให้ กากบาทในช่อง Missing</Text>
+            <Text style={[tw("text-xl"), { lineHeight: 0.9 }]}><Text style={[tw("font-bold")]} >การบันทึกช่อง No: </Text>กรณีมีเอกสารแต่ไม่มีการบันทึกในเอกสารนั้น ให้กากบาทในช่อง “No”</Text>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <Text style={[tw("text-xl"), { lineHeight: 0.9 }]}>
-                <Text style={tw("font-bold")}>กำรบันทึกคะแนน: </Text>
+                <Text style={tw("font-bold")}>การบันทึกคะแนน: </Text>
                 (1) กรณีที่ผ่านเกณฑ์ในแต่ละข้อ ให้ 1 คะแนน (2) กรณีที่ไม่ผ่านเกณฑ์ในแต่ละข้อ ให้ 0 คะแนน (3) กรณีไม่จำเป็นต้องมีบันทึก/ไม่มีข้อมูล 
               </Text>
               <View style={[tw("pl-1.5"), { flexDirection: 'column' }]}>
