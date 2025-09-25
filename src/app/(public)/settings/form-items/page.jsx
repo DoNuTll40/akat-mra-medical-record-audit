@@ -11,11 +11,9 @@ import { ListFilterPlus} from "lucide-react";
 import ModalAddContentIteme from "@/components/modal/ModalAddContentIteme";
 import { addToast } from "@heroui/toast";
 import LoadingCenter from "@/components/loading";
-import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import Ripple from "material-ripple-effects";
 import Forbidden from "@/components/Forbidden";
 import ButtonCellRenderer from "@/components/table/ButtonCellRenderer";
-import Image from "next/image";
 
 export default function page() {
   const [ token, setToken ] = useState(localStorage.getItem("token"));
@@ -57,7 +55,7 @@ export default function page() {
         }
       })
       if(res.status === 200){
-        addToast({ title: "สําเร็จ", description: res.data.message, timeout: 8000, color: "success", shouldShowTimeoutProgress: true, classNames: "text-white" });
+        addToast({ title: "สําเร็จ", description: res.data.message, timeout: 8000, color: "success", shouldShowTimeoutProgress: true });
         setLoadingAdd(false);
         fetchAllContent();
         setModalOpen(false);
@@ -79,7 +77,7 @@ export default function page() {
       })
 
       if(res.status === 200){
-        addToast({ title: "สําเร็จ", description: res.data.message, timeout: 8000, color: "success", shouldShowTimeoutProgress: true, classNames: "text-white" });
+        addToast({ title: "สําเร็จ", description: res.data.message, timeout: 8000, color: "success", shouldShowTimeoutProgress: true });
         fetchAllContent();
         setModalOpen(false);
         setEditValues(null);
@@ -101,7 +99,7 @@ export default function page() {
         }
       })
       if(res.status === 200){
-        addToast({ title: "สําเร็จ", description: res.data.message, timeout: 8000, color: "success", shouldShowTimeoutProgress: true, classNames: "text-white" });
+        addToast({ title: "สําเร็จ", description: res.data.message, timeout: 8000, color: "success", shouldShowTimeoutProgress: true });
         setLoadingDelete(false);
         fetchAllContent();
       }

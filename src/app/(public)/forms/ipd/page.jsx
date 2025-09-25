@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 import { Checkbox } from "@heroui/checkbox";
 import { Radio, RadioGroup } from "@heroui/radio";
 import MRAFormIPD from "@/components/RenderForm/MRAFormIPD";
-import { PDFViewer } from "@react-pdf/renderer";
+import { pdf, PDFViewer } from "@react-pdf/renderer";
 import { addToast } from "@heroui/toast";
 import ModalTextForm from "@/components/modal/ModalTextForm";
 import maskANPretty from "@/utils/maskANPretty";
@@ -30,6 +30,7 @@ export default function Page() {
   const [ rowData, setRowData ] = useState([]);
   const [ overallData, setOverallData ] = useState([]);
   const [ reviewStatus, setReviewStatus ] = useState(null);
+  const [ pdfBase64, setPdfBase64 ] = useState(""); 
 
   const [ loadingDelete, setLoadingDelete ] = useState(false);
   const [ loadingDataTable, setLoadingDataTable ] = useState(false);
@@ -87,6 +88,7 @@ export default function Page() {
   }
 
   const fetchOnePatient = async (anKey) => {
+    setPdfReady(false);
     try {
       const res = await axiosApi.get(`mraIpd/fetchPatient/${anKey}`, {
         headers: { Authorization: `Bearer ${token}` }, // ใช้ token จาก hook
@@ -255,7 +257,22 @@ export default function Page() {
         }, 500);
       }
     } catch (err) {
-      console.log(err);
+
+      // -----------------error 409 คือ ได้รับไฟล์ PDF-----------------------
+      if(err.response.status === 409) {
+        setPdfReady(true); //--- ให้แสดงไฟล์ PDF
+        setPdfBase64(err.response.data.data.pdf_file); //--- ให้ข้อมูล PDF
+        const p = err.response.data.data?.form_ipds?.patients;
+        setPatientAn({
+          hn: p.patient_hn || "",
+          fullname: p.patient_fullname || "",
+          regdate: p.patient_date_admitted || "",
+          dcgdate: p.patient_date_discharged || "",
+          ward_name: p.patient_ward || "",
+        });
+      } else {
+        addToast({ title: "เกิดข้อผิดพลาด", description: err.response.data.message, timeout: 8000, color: "danger", shouldShowTimeoutProgress: true });
+      }
     } finally {
       setGeneratePdf(false);
     }
@@ -587,6 +604,51 @@ export default function Page() {
     </PDFViewer>
   ), [an, pdfData]);
 
+  const generateBase64 = async (pdfData) => {
+    const blob = await pdf(<MRAFormIPD {...pdfData} />).toBlob();
+    const base64 = await blobToBase64(blob);
+    return base64;
+  };
+
+  useEffect(() => {
+    if (pdfData) {
+    (async () => {
+      const base64 = await generateBase64(pdfData);
+      setPdfBase64(base64);
+      sendPpfFile(base64, pdfData.form_ipd_id);
+    })();
+  }
+  }, [pdfData])
+
+  const sendPpfFile = async (b64, id) => {
+    console.log(id)
+    try {
+      const res = await axiosApi.post(`/mraIpd/insertPdf`, {
+        form_ipd_id: id,
+        binary: b64
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      if (res.status === 200) {
+        console.log(res.data)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const blobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(',')[1]); // ได้เป็น pure base64 string
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
   const hdlDelete = async ( output ) => {
     setLoadingDelete(true);
     if (output.patient_an !== an) {
@@ -677,6 +739,7 @@ export default function Page() {
                 setPdfReady(false);
                 setPdfData(null);
                 hdlClear();
+                setPdfBase64("");
               }}
               variant="bordered"
               radius="md"
@@ -743,16 +806,14 @@ export default function Page() {
         </>
       }
 
-      { generatePdf && 
+      {pdfReady && ( pdfBase64 === "" ? 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="z-50 fixed inset-0 w-full h-dvh flex items-center justify-center backdrop-blur-xs">
           <LoadingCenter title="กําลังสร้าง PDF..." />
         </motion.div> 
-      }
-
-       {pdfReady && (
+        : 
         <div className="w-full h-[calc(100vh-15vh)] overflow-hidden rounded-2xl my-2 shadow-lg">
-          {pdfData && memoizedPdf}
-        </div>      
+          <iframe title="pdf" loading="lazy" width="100%" height="100%" src={`data:application/pdf;base64,${pdfBase64}`} className="w-full h-full" />
+        </div>
       )}
 
       { formData.review_status_id && !pdfReady && (

@@ -101,7 +101,7 @@ export default function ModalAddContentIteme({ isOpen, onClose, fetchPatient, on
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const body = { content_of_medical_record_name: input, patient_service_id: String(selectedId || ""), ...payload };
+    const body = { content_of_medical_record_name: input,  ...payload };
 
     return onSubmit(body);
   };
@@ -159,7 +159,7 @@ export default function ModalAddContentIteme({ isOpen, onClose, fetchPatient, on
             labelPlacement="outside-top" 
             placeholder="เช่น Consultation Record"
             onValueChange={(value) => setInput(value)}
-            isDisabled={editValues !== null}
+            // isDisabled={editValues !== null}
             value={input}
           />
 

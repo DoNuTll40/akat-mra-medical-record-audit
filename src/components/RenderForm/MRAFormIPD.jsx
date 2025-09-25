@@ -34,7 +34,7 @@ export default function MRAFormIPD({ patients, form_ipd_content_of_medical_recor
     <Document 
       title={`MRA-IPD-${patients?.patient_an}`}
       author="โรงพยาบาลอากาศอำนวย"
-      subject="แบบตรวจประเมินคุณภำพกำรบันทึกเวชระเบียนผู้ป่วยใน Medical Record Audit Form (IPD)"
+      subject="แบบตรวจประเมินคุณภาพการบันทึกเวชระเบียนผู้ป่วยใน Medical Record Audit Form (IPD)"
       creator="© Copyright 2025 โรงพยาบาลอากาศอำนวย"
       producer="react-pdf"
       pdfVersion="1.7"
@@ -44,7 +44,7 @@ export default function MRAFormIPD({ patients, form_ipd_content_of_medical_recor
           src="/mra/images/logo-nhso-go-th-vector.png" 
           style={tw("w-32 h-auto mt-2 mx-auto")} 
         />
-        <Text style={[tw("text-center font-bold text-[#ec028d] text-xl my-0.5"), { lineHeight: 1 }]}>แบบตรวจประเมินคุณภำพกำรบันทึกเวชระเบียนผู้ป่วยใน Medical Record Audit Form (IPD)</Text>
+        <Text style={[tw("text-center font-bold text-[#ec028d] text-xl my-0.5"), { lineHeight: 1 }]}>แบบตรวจประเมินคุณภำพการบันทึกเวชระเบียนผู้ป่วยใน Medical Record Audit Form (IPD)</Text>
 
         {/* Header Input Form */}
         <View style={tw("relative")}>
@@ -222,7 +222,7 @@ export default function MRAFormIPD({ patients, form_ipd_content_of_medical_recor
         {/* Footer Form */}
         <View style={[tw("relative mt-1"), { lineHeight: 0.9 }]}>
           <View style={[{ flexDirection: 'column'}]}>
-            <Text style={[tw("text-xl font-bold"), { lineHeight: 0.87 }]}>ประเมินคุณภำพกำรบันทึกเวชระเบียนในภาพรวม</Text>
+            <Text style={[tw("text-xl font-bold"), { lineHeight: 0.87 }]}>ประเมินคุณภาพการบันทึกเวชระเบียนในภาพรวม</Text>
             <View style={[{ height: 0.5, backgroundColor: '#000', lineHeight: 0.5, width: 200, }]} />
           </View>
         </View>

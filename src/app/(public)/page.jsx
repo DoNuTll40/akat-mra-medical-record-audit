@@ -179,7 +179,7 @@ function WardRow({ name, value, total }) {
       </div>
       <div className="mt-2 h-2 w-full rounded-full bg-zinc-100 dark:bg-zinc-600 overflow-hidden">
         <div
-          className="h-full rounded-full bg-emerald-500 dark:bg-emerald-600"
+          className="h-full rounded-full shadow bg-gradient-to-r from-emerald-500 to-emerald-600 dark:bg-emerald-600"
           style={{ width: `${pct}%` }}
           aria-label={`${name} ${pct}%`}
         />
