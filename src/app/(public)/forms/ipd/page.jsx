@@ -261,7 +261,7 @@ export default function Page() {
       // -----------------error 409 คือ ได้รับไฟล์ PDF-----------------------
       if(err.response.status === 409) {
         setPdfReady(true); //--- ให้แสดงไฟล์ PDF
-        setPdfBase64(err.response.data.data.pdf_file); //--- ให้ข้อมูล PDF
+        setPdfBase64(err.response?.data.data?.pdf_file); //--- ให้ข้อมูล PDF
         const p = err.response.data.data?.form_ipds?.patients;
         setPatientAn({
           hn: p.patient_hn || "",
@@ -598,12 +598,6 @@ export default function Page() {
     }))
   }
 
-  const memoizedPdf = useMemo(() => (
-    <PDFViewer ref={pdfRef} key={an} width="100%" height="100%" showToolbar>
-      <MRAFormIPD {...pdfData}  />
-    </PDFViewer>
-  ), [an, pdfData]);
-
   const generateBase64 = async (pdfData) => {
     const blob = await pdf(<MRAFormIPD {...pdfData} />).toBlob();
     const base64 = await blobToBase64(blob);
@@ -621,12 +615,17 @@ export default function Page() {
   }, [pdfData])
 
   const sendPpfFile = async (b64, id) => {
-    console.log(id)
+
+    const body = {
+      form_ipd_id: id,
+      binary: b64,
+      total_score: pdfData.totalDefaultSum,
+      score_obtained: pdfData.totalScoreSum,
+      percentage: pdfData.formattedResultSum,
+    }
+
     try {
-      const res = await axiosApi.post(`/mraIpd/insertPdf`, {
-        form_ipd_id: id,
-        binary: b64
-      }, {
+      const res = await axiosApi.post(`/mraIpd/insertPdf`, body, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -780,7 +779,7 @@ export default function Page() {
       {rowData.length > 0 && !pdfReady &&
         <>
           <hr className="mt-8 mb-6" />
-          <p className="underline underline-offset-2 select-none">ประเมินคุณภำพกำรบันทึกเวชระเบียนในภาพรวม</p>
+          <p className="underline underline-offset-2 select-none">ประเมินคุณภาพการบันทึกเวชระเบียนในภาพรวม</p>
           <div className="flex items-start gap-2 py-2">
             <p className="font-semibold w-[130px] text-sm">Overall Finding</p>
             <div className="flex flex-col gap-2">
