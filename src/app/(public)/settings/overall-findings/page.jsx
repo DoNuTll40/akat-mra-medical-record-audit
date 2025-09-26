@@ -59,7 +59,7 @@ export default function Page() {
           hdlDelete={hdlDelete} 
           data={props.data} 
           title={props.data.overall_finding_name} 
-          id={props.data.overall_finding_name} 
+          id={props.data.overall_finding_id} 
         /> 
       ),
       minWidth: 130,
