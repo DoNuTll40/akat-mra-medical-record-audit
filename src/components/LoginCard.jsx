@@ -21,6 +21,7 @@ export default function LoginCard({ animated }) {
   const formRef = useRef(null);
 
   const [showModalPopUpMessage, setShowModalPopUpMessage] = useState(false);
+  const [ popUpMessage, setPopUpMessage ] = useState("");
 
   const ripple = new Ripple();
 
@@ -41,6 +42,7 @@ export default function LoginCard({ animated }) {
       };
     } catch (err) {
       setShowModalPopUpMessage(true);
+      setPopUpMessage(err.response.data.message);
       addToast({
         title: "เกิดข้อผิดพลาด",
         description: err.response.data.message,
@@ -55,7 +57,7 @@ export default function LoginCard({ animated }) {
 
   return (
     <Card>
-      { showModalPopUpMessage && <PopUpMessage title="การเชื่อมต่อช้า" type="error" message="ระบบเกิดข้อผิดพลาดอยู่ในขณะนี้…" onClose={() => setShowModalPopUpMessage(false)} /> }
+      { showModalPopUpMessage && <PopUpMessage title="การเชื่อมต่อช้า" type="error" message={popUpMessage || `ระบบเกิดข้อผิดพลาดอยู่ในขณะนี้…`} onClose={() => setShowModalPopUpMessage(false)} /> }
       <ModalVerifyOtp open={showModalOtp} onClose={() => setShowModalOtp(false)} token={token} />
       <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.25, delayChildren: 0.15 }}>
         {/* Header */}
@@ -135,9 +137,9 @@ export default function LoginCard({ animated }) {
               "disabled:opacity-50 disabled:cursor-not-allowed",
             ].join(" ")}
             whileTap={{ scale: 0.99 }}
-            disabled={loading}
+            disabled={loading || showModalPopUpMessage}
           >
-            {loading ? "กำลังเข้าสู่ระบบ" : "เข้าสู่ระบบ"}
+            {(loading || showModalPopUpMessage) ? "กำลังเข้าสู่ระบบ" : "เข้าสู่ระบบ"}
           </motion.button>
 
           <motion.div className="mt-3 text-center" variants={animated.fadeUp}>
